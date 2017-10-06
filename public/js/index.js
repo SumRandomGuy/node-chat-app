@@ -7,6 +7,9 @@ socket.on('connect', function () {
         console.log('New Message', message);
     });
 
+    socket.on('userJoin', function (message) {
+        console.log('New User Joined:', message);
+    });
 });
 
 socket.on('disconnect', function () {

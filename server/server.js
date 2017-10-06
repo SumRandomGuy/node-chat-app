@@ -12,6 +12,18 @@ var io = socketIO(server);
 io.on('connection', (socket) => {
     console.log('New user connected');
 
+    socket.emit('userJoin', {
+        from: 'Admin',
+        text: 'Welcome to the chat app',
+        createdAt: new Date().getTime()
+    });
+
+    socket.broadcast.emit('userJoin', {
+        from: 'Admin', 
+        text: 'New user has joined',
+        createdAt: new Date().getTime()
+    });
+
     socket.on('createMessage', (message) => {
         console.log('createMessage: ', message);
         // io.emit emits to all clients while socket.emit sends to just one.
@@ -20,6 +32,12 @@ io.on('connection', (socket) => {
             text: message.text,
             createdAt: new Date().getTime()
         });
+
+        // socket.broadcast.emit('newMessage', {
+        //     from: message.from,
+        //     text: message.text,
+        //     createdAt: new Date().getTime()
+        // });
     });
 
     socket.on('disconnect', () => {
