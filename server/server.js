@@ -11,10 +11,21 @@ var io = socketIO(server);
 
 io.on('connection', (socket) => {
     console.log('New user connected');
-});
 
-io.on('disconnect', () => {
-    console.log('Client disconnected');
+    socket.on('createMessage', (message) => {
+        message.createdAt = 676;
+        console.log('createMessage: ', message);
+    });
+
+    socket.emit('newMessage', {
+        from: 'me',
+        text: 'This is a test message',
+        createdAt: 456
+    });
+
+    socket.on('disconnect', () => {
+        console.log('Client was disconnected');
+    });
 });
 
 app.use(express.static(publicPath));
