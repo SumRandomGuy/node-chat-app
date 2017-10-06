@@ -7,10 +7,6 @@ socket.on('connect', function () {
         console.log('New Message', message);
     });
 
-    socket.emit('createMessage', {
-        to: 'user1',
-        text: 'Hello there'
-    });
 });
 
 socket.on('disconnect', function () {

@@ -13,14 +13,13 @@ io.on('connection', (socket) => {
     console.log('New user connected');
 
     socket.on('createMessage', (message) => {
-        message.createdAt = 676;
         console.log('createMessage: ', message);
-    });
-
-    socket.emit('newMessage', {
-        from: 'me',
-        text: 'This is a test message',
-        createdAt: 456
+        // io.emit emits to all clients while socket.emit sends to just one.
+        io.emit('newMessage', {
+            from: message.from,
+            text: message.text,
+            createdAt: new Date().getTime()
+        });
     });
 
     socket.on('disconnect', () => {
